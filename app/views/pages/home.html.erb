@@ -1,2 +1,11 @@
 <h1>Home</h1>
-<%= link_to 'Articles', articles_path %>
+<%= link_to 'Articles', articles_path %><br /><br />
+<div>
+  <% if user_signed_in? %>
+    <%= button_to 'Log out!', destroy_user_session_path, method: :delete %> |
+    <%= link_to 'Edit profile!', edit_user_registration_path %>
+  <% else %>
+    <%= link_to 'Sing up!', new_user_registration_path %> |
+    <%= link_to 'Log in!', user_registration_path %>
+  <% end %>
+</div>
