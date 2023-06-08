@@ -2,7 +2,7 @@
 
 <div id="articles">
   <% @articles.each do |article| %>
-    <%= render article %>
+    <%= link_to article.title.capitalize, article %>
     <p>
       <%= link_to "Show this article", article %>
     </p>
