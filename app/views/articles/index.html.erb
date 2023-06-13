@@ -2,6 +2,7 @@
 
 <div id="articles">
   <% @articles.each do |article| %>
+    <%= 'Created by: ' %><%=  article.user.email %>
     <%= link_to article.title.capitalize, article %>
   <% end %>
 </div>
