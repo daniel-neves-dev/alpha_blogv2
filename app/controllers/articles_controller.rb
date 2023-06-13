@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: %i[ show edit update destroy ]
-
+  before_action :correct_user, only: %i[ edit update destroy ]
   # GET /articles or /articles.json
   def index
     @articles = Article.all
@@ -12,7 +12,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles/new
   def new
-    @article = Article.new
+    @article = current_user.articles.build
   end
 
   # GET /articles/1/edit
@@ -21,7 +21,7 @@ class ArticlesController < ApplicationController
 
   # POST /articles or /articles.json
   def create
-    @article = Article.new(article_params)
+    @article = current_user.articles.build(article_params)
 
     respond_to do |format|
       if @article.save
@@ -58,6 +58,10 @@ class ArticlesController < ApplicationController
   end
 
   private
+  def correct_user
+    @article = current_user.articles.find_by(id: params[:id])
+    redirect_to articles_path, notice: "Not Authorized" if @article.nil?
+  end
     # Use callbacks to share common setup or constraints between actions.
     def set_article
       @article = Article.find(params[:id])
@@ -65,6 +69,6 @@ class ArticlesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def article_params
-      params.require(:article).permit(:title, :body)
+      params.require(:article).permit(:title, :body, :user_id)
     end
 end
