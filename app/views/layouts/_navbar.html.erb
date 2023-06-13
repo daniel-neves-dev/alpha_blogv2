@@ -1,6 +1,7 @@
 <div>
   <%= link_to 'Home', root_path %> |
   <% if user_signed_in? %>
+    <%= current_user.name.capitalize %> |
     <%= link_to 'Edit profile', edit_user_registration_path %> |
     <%= button_to 'Log out', destroy_user_session_path, method: :delete %>
   <% else %>
